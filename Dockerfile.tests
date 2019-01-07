@@ -9,8 +9,11 @@ FROM salus-local
 
 COPY spec /home/spec
 
+# Symlink for gosec testing
+RUN ln -s /home/spec $GOPATH/src/repo/spec
+
 RUN bundle install --with test
 
-RUN rm ./spec/docker/docker_spec.rb && rm ./spec/static_analysis/rubocop_spec.rb
+RUN rm ./spec/docker/docker_spec.rb
 
 ENTRYPOINT ["bundle", "exec", "rspec", "spec/"]
